@@ -42,8 +42,8 @@ def encode_texts(
 
 
 def build_candidate_text(candidate: dict) -> str:
-    profile = candidate.get("profile", {})
-    signals = candidate.get("redrob_signals", {})
+    profile = candidate.get("profile", {}) or {}
+    signals = candidate.get("redrob_signals", {}) or {}
     parts: List[str] = []
 
     headline = (profile.get("headline") or "").strip()

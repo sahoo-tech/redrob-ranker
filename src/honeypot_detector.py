@@ -1,18 +1,17 @@
-import datetime
 from typing import Tuple
 
 from . import config
 from .utils import dates_overlap, normalize_text
 
 
-_TODAY = datetime.date.today()
-
-_RETRIEVAL_TERMS = {
-    normalize_text(t)
-    for t in config.RETRIEVAL_SIGNALS
-}
-
 _AI_SKILL_TERMS = {normalize_text(s) for s in config.REQUIRED_SKILLS + config.NICE_TO_HAVE_SKILLS}
+_RETRIEVAL_TERMS = {normalize_text(t) for t in config.RETRIEVAL_SIGNALS}
+
+_SPECIFIC_RETRIEVAL_TOOLS = {
+    "faiss", "pinecone", "weaviate", "qdrant", "milvus",
+    "opensearch", "vector database", "dense retrieval",
+    "approximate nearest neighbor", "ann",
+}
 
 _TECH_TITLE_FRAGMENTS = {
     "engineer", "developer", "scientist", "analyst", "architect",
@@ -22,8 +21,7 @@ _TECH_TITLE_FRAGMENTS = {
 
 def _is_nontechnical_title(title: str) -> bool:
     t = normalize_text(title)
-    has_tech = any(frag in t for frag in _TECH_TITLE_FRAGMENTS)
-    return not has_tech
+    return not any(frag in t for frag in _TECH_TITLE_FRAGMENTS)
 
 
 def _career_mentions_retrieval(career: list) -> bool:
@@ -60,7 +58,7 @@ def detect_honeypot(candidate: dict) -> Tuple[bool, str]:
     if _is_nontechnical_title(current_title) and ai_skill_count >= 8:
         return (
             True,
-            f"Non-technical title '{current_title}' with {ai_skill_count} AI skills declared"
+            f"Non-technical title '{current_title}' with {ai_skill_count} AI skills declared",
         )
 
     non_current = [r for r in career if not r.get("is_current", False)]
@@ -71,26 +69,24 @@ def detect_honeypot(candidate: dict) -> Tuple[bool, str]:
             if dates_overlap(
                 r1.get("start_date"), r1.get("end_date"),
                 r2.get("start_date"), r2.get("end_date"),
-                ref_date=_TODAY,
             ):
                 return (
                     True,
-                    f"Overlapping employment: '{r1.get('company')}' and '{r2.get('company')}'"
+                    f"Overlapping employment: '{r1.get('company')}' and '{r2.get('company')}'",
                 )
 
-    retrieval_skill_names = [
-        "faiss", "pinecone", "weaviate", "qdrant", "milvus",
-        "vector database", "semantic search", "dense retrieval",
-        "approximate nearest neighbor", "ann", "embeddings",
-    ]
-    claims_retrieval_skills = any(
-        any(rs in normalize_text(s.get("name") or "") for rs in retrieval_skill_names)
-        for s in skills
+    has_career_descriptions = any(
+        (role.get("description") or "").strip() for role in career
     )
-    if claims_retrieval_skills and not _career_mentions_retrieval(career):
+    specific_retrieval_claims = sum(
+        1 for s in skills
+        if any(rt in normalize_text(s.get("name") or "") for rt in _SPECIFIC_RETRIEVAL_TOOLS)
+        and normalize_text(s.get("proficiency") or "") in ("expert", "advanced")
+    )
+    if specific_retrieval_claims >= 3 and has_career_descriptions and not _career_mentions_retrieval(career):
         return (
             True,
-            "Claims retrieval/vector skills but no retrieval language found in career descriptions"
+            f"Claims {specific_retrieval_claims} expert/advanced retrieval tools but no retrieval language in career descriptions",
         )
 
     return False, ""

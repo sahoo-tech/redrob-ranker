@@ -5,3 +5,5 @@ from . import utils
 from . import features
 from . import behavioral
 from . import honeypot_detector
+from . import scorer
+from . import reasoner

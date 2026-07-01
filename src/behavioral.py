@@ -1,5 +1,4 @@
 import datetime
-from typing import Optional
 
 from . import config
 from .utils import parse_date
@@ -79,7 +78,7 @@ def _engagement_score(signals: dict) -> float:
 
 
 def _notice_score(signals: dict) -> float:
-    days = int(signals.get("notice_period_days") or 0)
+    days = int(signals.get("notice_period_days") or 90)
     if days <= 15:
         return 1.0
     elif days <= 30:

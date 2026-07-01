@@ -38,12 +38,17 @@ REQUIRED_SKILLS = [
     "a/b testing", "python", "evaluation framework", "reranking",
     "learning to rank", "rag", "dense retrieval", "bm25", "approximate nearest neighbor",
     "information retrieval", "recommendation system", "ann",
+    "vector store", "knn", "bi-encoder", "cross-encoder", "two-tower",
+    "sparse retrieval", "inverted index", "tf-idf", "colbert",
+    "recall@k", "mrr@k", "text embeddings", "sentence embeddings",
 ]
 
 NICE_TO_HAVE_SKILLS = [
     "lora", "qlora", "peft", "fine-tuning", "fine-tuning llms", "xgboost",
     "open-source", "transformer", "langchain", "llm", "llms",
     "machine learning", "deep learning", "nlp", "pytorch", "tensorflow",
+    "huggingface", "bert", "gpt", "t5", "encoder", "decoder",
+    "attention mechanism", "finetuning",
 ]
 
 DISQUALIFIER_TITLES = [
@@ -51,6 +56,8 @@ DISQUALIFIER_TITLES = [
     "mechanical engineer", "civil engineer", "content writer", "business analyst",
     "hr manager", "sales manager", "sales executive", "graphic designer",
     "seo specialist", "finance manager", "supply chain", "logistics",
+    "project manager", "program manager", "product manager",
+    "scrum master", "agile coach", "ux designer", "ui designer", "data entry",
 ]
 
 AI_ENGINEER_TITLES = [
@@ -60,6 +67,9 @@ AI_ENGINEER_TITLES = [
     "recommendation engineer", "senior ai engineer", "principal ai engineer",
     "software engineer", "backend engineer", "full stack engineer",
     "data engineer", "analytics engineer", "platform engineer",
+    "ml infrastructure engineer", "ml platform engineer", "mlops engineer",
+    "applied ml engineer", "search scientist", "ranking scientist",
+    "recommendation scientist", "ml infra engineer", "staff engineer",
 ]
 
 CONSULTING_FIRMS = [
@@ -133,6 +143,8 @@ PRODUCTION_SIGNALS = [
     "deployed", "deployment", "serving", "inference", "production", "latency",
     "a/b test", "a/b testing", "scale", "scaled", "pipeline", "real-time",
     "online", "live traffic", "serving infra", "model serving",
+    "shipped", "launched", "rollout", "productionized", "qps", "throughput",
+    "end-to-end", "inference pipeline", "production model", "real time serving",
 ]
 
 RETRIEVAL_SIGNALS = [
@@ -141,11 +153,17 @@ RETRIEVAL_SIGNALS = [
     "similarity search", "ann", "approximate nearest", "semantic search",
     "dense retrieval", "sparse retrieval", "hybrid search", "bm25",
     "faiss", "pinecone", "weaviate", "qdrant", "milvus", "opensearch",
+    "vector search", "knn search", "nearest neighbor", "bi-encoder", "cross-encoder",
+    "reranker", "embedding search", "dense vector", "inverted index",
+    "passage retrieval", "information retrieval", "semantic similarity",
 ]
 
 ENGINEERING_SIGNALS = [
     "architecture", "microservice", "api", "rest", "grpc", "docker",
     "kubernetes", "ci/cd", "distributed", "kafka", "airflow", "spark",
+    "terraform", "helm", "mlflow", "kubeflow", "celery", "redis",
+    "monitoring", "observability", "feature store", "feature engineering",
+    "data pipeline", "etl",
 ]
 
 RESEARCH_ONLY_SIGNALS = [
@@ -161,6 +179,8 @@ STRATEGY_ONLY_SIGNALS = [
 SHALLOW_AI_SIGNALS = [
     "langchain", "openai api", "chatgpt wrapper", "gpt wrapper",
     "llm api", "prompt engineering",
+    "chatgpt", "gpt-4", "gpt4", "claude api", "anthropic api",
+    "gemini api", "cohere api", "ai wrapper", "api wrapper",
 ]
 
 TOP_N = 100

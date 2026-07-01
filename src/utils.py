@@ -52,7 +52,12 @@ def is_tier1_institution(name: Optional[str]) -> bool:
 
 
 def get_experience_score(years: float) -> float:
-    for lo, hi, score in config.EXP_BANDS:
-        if lo <= years <= hi:
-            return score
+    bands = config.EXP_BANDS
+    for i, (lo, hi, score) in enumerate(bands):
+        if i < len(bands) - 1:
+            if lo <= years < hi:
+                return score
+        else:
+            if years >= lo:
+                return score
     return 0.10
